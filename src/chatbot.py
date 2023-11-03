@@ -16,14 +16,18 @@ ACCOUNTS = {
 VALID_TASKS = {"balance", "deposit", "exit"}
 
 ## CODE REQUIRED FUNCTIONS STARTING HERE:
+
+
 def get_account() -> int:
     """
+
     Description: Get the user to input their account number
     Parameter: None
     Return Description: Returns the users valid account number parsed as an integer
     Exceptions: Raises a ValueError if the account number is not a whole number. 
                 Raises an Exception is the account number does not exist
     """
+
     account_number = input("Please enter your account number: ")
     try:
         account_number = int(account_number)
@@ -49,6 +53,14 @@ def get_amount() -> float:
     if user_amount >= 0:
         raise ValueError("Invalid amount. Please enter a positive number.")
     return user_amount
+
+def get_balance(account: int) -> str:
+    if account not in ACCOUNTS:
+        raise Exception("Account number does not exist.")
+    balance = ACCOUNTS[account]["balance"]
+    return f"Your current balance for account {account} and ${balance:,.2f}."
+    
+    
 
 ## GIVEN CHATBOT FUNCTION
 ## REQUIRES REVISION
