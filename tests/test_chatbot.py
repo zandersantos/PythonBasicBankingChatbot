@@ -6,8 +6,9 @@ Usage:
 """
 import unittest
 from unittest.mock import patch
-from src.chatbot import get_account
+from src.chatbot import get_account, get_amount
 from src.chatbot import VALID_TASKS, ACCOUNTS
+
 
 class ChatbotTests(unittest.TestCase):
     def test_valid_account(self):
@@ -18,6 +19,7 @@ class ChatbotTests(unittest.TestCase):
             mock_input.side_effect = ["123456"]    
         #Assert
         self.assertEqual(int(mock_input()),expected_output)
+    
     
     def test_non_numeric_data(self):
         #Arrange
@@ -43,4 +45,40 @@ class ChatbotTests(unittest.TestCase):
             get_account()
             
         self.assertEqual(str(context.exception), expected_output) 
+        
+    def test_valid_amount(self):
+        # Arrange
+        expected_output = "500.1"
+        #Act
+        with patch("builtins.input") as mock_input:
+            mock_input.side_effect = ["500.1"]    
+        #Assert
+        result = mock_input()
+       
+        self.assertEqual(result,expected_output)
+    
+    def test_non_numeric_amount(self):
+        #Arrange
+        expected_output = "Invalid amount. Amount must be numeric."
+        #Act
+        with patch("builtins.input") as mock_input:
+            mock_input.side_effect = ["non_numeric_data"]
+        #Assert
+        with self.assertRaises(ValueError) as context:
+            get_amount()
+            
+        self.assertEqual(str(context.exception), expected_output)
+        
+    def test_zero_or_negative(self):
+        #Arrange
+        expected_output = "Invalid amount. Please enter a positive number."
+        #Act
+        with patch("builtins.input") as mock_input:
+            mock_input.side_effect = ["0"]
+        #Assert
+        with self.assertRaises(ValueError) as context:
+            get_amount()
+            
+        self.assertEqual(str(context.exception), expected_output)
+        
     

@@ -33,8 +33,22 @@ def get_account() -> int:
         raise Exception("Account number entered does not exist.")
     return account_number
         
-
-
+def get_amount() -> float:
+    """
+    Description: Get the user to input their transaction amount
+    Parameter: None
+    Return Description: Returns the users valid transaction as a float
+    Exceptions: Raises a ValueError if the transaction number is not numeric. 
+                Raises a ValueError if the transaction number is 0 or less then 0 (negative)
+    """
+    user_amount = input("Enter the transaction amount: ")
+    try:
+        user_amount = int(user_amount)
+    except Exception:
+        raise ValueError("Invalid amount. Amount must be numeric.")
+    if user_amount >= 0:
+        raise ValueError("Invalid amount. Please enter a positive number.")
+    return user_amount
 
 ## GIVEN CHATBOT FUNCTION
 ## REQUIRES REVISION
