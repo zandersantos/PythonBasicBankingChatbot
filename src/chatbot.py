@@ -50,7 +50,7 @@ def get_amount() -> float:
         user_amount = int(user_amount)
     except Exception:
         raise ValueError("Invalid amount. Amount must be numeric.")
-    if user_amount >= 0:
+    if user_amount <= 0:
         raise ValueError("Invalid amount. Please enter a positive number.")
     return user_amount
 
@@ -73,12 +73,14 @@ def make_deposit(account: int, amount: float) -> str:
     Return Description: Returns the a string which shows the deposit amount and the account related
     Exceptions: Raises a ValueError if the amount is not a positive 
     """
+    
     if account not in ACCOUNTS:
         raise Exception("Account number does not exist.")
     if amount <= 0:
         raise ValueError("Invalid Amount. Amount must be positive.")
     balance = ACCOUNTS[account]["balance"]
     ACCOUNTS[account]["balance"] = balance + amount
+    
     return f"You have made a deposit of ${balance:,.2f} to account {account}."
 
 def user_selection()->str:
@@ -88,7 +90,7 @@ def user_selection()->str:
     Return Description: Returns the users valid tasks selection
     Exceptions: Raises an Exception if the user inputs an invalid task
     """
-    user_input = input("What would you like to do (balance/deposit/exit)?")
+    user_input = input("What would you like to do (balance/deposit/exit)? ")
     user_input = user_input.lower()
     if user_input not in VALID_TASKS:
         raise Exception("Invalid task. Please choose balance, deposit, or exit.")
